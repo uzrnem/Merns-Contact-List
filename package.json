@@ -9,7 +9,8 @@
     "client-install": "npm install --prefix client",
     "start": "node server.js",
     "server": "nodemon server.js",
-    "client": "npm start --prefix client"
+    "client-webpack": "npm run wpk --prefix client",
+    "client-watch": "npm run wbt --prefix client"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
