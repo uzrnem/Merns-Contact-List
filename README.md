@@ -40,13 +40,13 @@ $ npm run client-install
 Start React Code using Webpack command in Client Directory
 
 ```sh
-client $ npm run client-webpack
+$ npm run client-webpack
 ```
 
-Or Watch Mode
+Or Run command in Watch Mode
 
 ```sh
-client $ run client-watch
+$ npm run client-watch
 ```
 
 
