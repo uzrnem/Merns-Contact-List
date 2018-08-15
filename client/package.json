@@ -1,0 +1,53 @@
+{
+  "name": "contact-list",
+  "version": "1.0.0",
+  "description": "none",
+  "main": "webpack.config.js",
+  "author": "Bhagyesh Sunil Patel",
+  "license": "Gisue",
+  "scripts": {
+    "dev": "webpack-dev-server --content-base ./ --inline --hot",
+    "wbt": "./node_modules/webpack/bin/webpack.js --watch",
+    "wpk": "./node_modules/webpack/bin/webpack.js",
+    "scss": "node-sass --watch scss -o ../static/compiled/css"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-react-html-attrs": "^2.1.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "css-hot-loader": "^1.4.1",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "history": "^4.7.2",
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0",
+    "react-jsonschema-form": "^1.0.3",
+    "react-loadable": "^5.3.1",
+    "react-redux": "^5.0.7",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "redux": "^3.7.2",
+    "redux-logger": "^3.0.6",
+    "redux-promise-middleware": "^5.0.0",
+    "redux-thunk": "^2.2.0",
+    "webpack": "^4.0.0",
+    "webpack-dev-server": "^3.1.1"
+  },
+  "devDependencies": {
+    "css-loader": "^0.28.11",
+    "extract-loader": "^2.0.1",
+    "file-loader": "^1.1.11",
+    "mini-css-extract-plugin": "^0.4.1",
+    "node-sass": "^4.9.3",
+    "postcss-loader": "^2.1.3",
+    "sass-loader": "^6.0.7",
+    "style-loader": "^0.20.3",
+    "webpack-cli": "^2.0.13"
+  }
+}

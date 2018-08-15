@@ -1,0 +1,42 @@
+.plate-card-header {
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
+  justify-content: flex-start;
+  position: relative;
+}
+.plate-card-title {
+  color: #363636;
+  flex-grow: 1;
+  flex-shrink: 0;
+  font-size: 1.5rem;
+  line-height: 1;
+  margin: 0px;
+}
+.btn-plate {
+  color: whitesmoke !important;
+}
+
+.plate {
+  margin: 0.35rem;
+}
+
+.plate:hover {
+  box-shadow: 2px 1px 1px 0px rgba(0,0,0,0.2);
+}
+
+.plate:hover .label {
+    background-color: var(--light);
+}
+
+.label {
+  font-size: small;
+  font-style: italic;
+  padding-left: 0.4rem;
+}
+
+.value {
+  border-left: 3px solid var(--secondary);
+  border-bottom: 1px solid var(--secondary);
+  padding-left: 1rem;
+}
