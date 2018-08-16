@@ -1,20 +1,21 @@
-const express = require('express');
-const router = express.Router();
-var indexController = require('../controllers/indexController')
-var fs = require('fs');
+const home = require('./home');
+const users = require('./users');
+const contactList = require('./contactList');
+//const path = require('path');
 
-// @route   GET api/users/test
-// @desc    Tests users route
-// @access  Public
-router.get('/', (req, res) => {
-  indexController.loadPage(req, res, 'login.html');
-}); //res.redirect('public/index.html');
+module.exports = (app, express) => {
+  app.use('/public', express.static('public'));
 
-// @route   GET api/users/test
-// @desc    Tests users route
-// @access  Public
-router.get(['/home.html'], (req, res) => {
-  indexController.loadPage(req, res, 'home.html');
-});
+  app.use('/api/users', users);
+  app.use('/api/contact-list', contactList);
+  app.use('/', home);
+};
+/*
 
-module.exports = router;
+  // Set static folder
+  app.use(express.static('client/build'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+*/
