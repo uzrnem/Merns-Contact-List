@@ -1,7 +1,9 @@
-const express = require('express');
+import express from 'express'
+import fs from 'fs'
+
+import indexController from '../controllers/indexController'
+
 const router = express.Router();
-var indexController = require('../controllers/indexController')
-var fs = require('fs');
 
 // @route   GET api/users/test
 // @desc    Tests users route

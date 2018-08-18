@@ -2,3 +2,4 @@ https://mongoosejs.com/docs/2.7.x/docs/finding-documents.html
 https://expressjs.com/en/guide/routing.html
 https://javascript.info/promise-basics
 https://www.codementor.io/iykyvic/writing-your-nodejs-apps-using-es6-6dh0edw2o
+http://jasonwatmore.com/post/2017/12/07/react-redux-jwt-authentication-tutorial-example
