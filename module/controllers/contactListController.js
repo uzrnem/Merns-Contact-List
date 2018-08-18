@@ -1,8 +1,8 @@
-const ContactList = require('../models/ContactList');
-const BaseController = require('./baseController');
+import ContactList from '../models/ContactList'
+import BaseController from './baseController'
 
 class ContactListController extends BaseController {
 }
-var controller = new ContactListController()
+const controller = new ContactListController()
 controller.setModel(ContactList)
 module.exports = controller

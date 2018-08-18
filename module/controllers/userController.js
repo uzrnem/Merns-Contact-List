@@ -1,11 +1,11 @@
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const keys = require('../../config/env');
+import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
 
-const user = require('../models/User');
-const BaseController = require('./baseController');
-const validateRegisterInput = require('../validation/register');
-const validateLoginInput = require('../validation/login');
+import { secretOrKey } from '../../config/env'
+import validateRegisterInput from '../validation/register'
+import validateLoginInput from '../validation/login'
+import user from '../models/User'
+import BaseController from '../controllers/baseController'
 
 class UserController extends BaseController {
   constructor() {

@@ -1,7 +1,9 @@
-const express = require('express');
-const router = express.Router();
-const passport = require('passport');
-var userController = require('../controllers/userController')
+import express from 'express'
+import passport from 'passport'
+
+import userController from '../controllers/userController'
+
+const router = express.Router()
 
 // @route   GET api/users/test
 // @desc    Tests users route

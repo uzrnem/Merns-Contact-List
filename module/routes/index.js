@@ -1,7 +1,6 @@
-const home = require('./home');
-const users = require('./users');
-const contactList = require('./contactList');
-//const path = require('path');
+import home from './home'
+import users from './users'
+import contactList from './contactList'
 
 module.exports = (app, express) => {
   app.use('/public', express.static('public'));
@@ -10,11 +9,7 @@ module.exports = (app, express) => {
   app.use('/api/contact-list', contactList);
   app.use('/', home);
 };
-/*
-
-  // Set static folder
-  app.use(express.static('client/build'));
-
+/*  // Set static folder
   app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });

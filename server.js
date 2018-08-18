@@ -1,9 +1,9 @@
-const express = require('express');
+import express from 'express'
 
 const app = express();
 
 require('./config/bodyParser')(app); // body Parser Config for Request Body
-require('./config/mongo'); // MongoDB DB Config
+import './config/mongo' // MongoDB DB Config
 require('./config/passport')(app); // Passport Config
 
 require('./module/routes/index')(app, express); // Use Routes

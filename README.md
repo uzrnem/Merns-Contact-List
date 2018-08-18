@@ -10,8 +10,8 @@ Extra feactures with ReactJS are as follow.
 
 Dependencies required
 
-  - Node v8.10.0
-  - NPM v5.7.1
+  - Node v10.9.0
+  - NPM v6.2.0
   - MongoDB
 
 
@@ -32,7 +32,7 @@ $ db.createUser(
 Install NPM Dependencies
 
 ```sh
-$ npm install
+$ npm run server-install
 $ npm run client-install
 ```
 
@@ -53,7 +53,13 @@ $ npm run client-watch
 Start Node Server
 
 ```sh
-$ nodemon server.js
+$ npm run dev
+```
+
+or (for while devlopment)
+
+```sh
+$ npm run devmon
 ```
 
 Core Team
