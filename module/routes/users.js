@@ -8,12 +8,12 @@ const router = express.Router()
 // @route   GET api/users/test
 // @desc    Tests users route
 // @access  Public
-router.get('/test', (req, res) => res.json({ msg: 'Users Works' }));
+router.get('/test', (req, res) => res.json({msg: 'Users Works'}));
 
 // @route   PUT api/users/register
 // @desc    Register user
 // @access  Public
-router.put(
+router.post(
   '/register',
   (req, res) => {
     userController.init(req, res)
@@ -34,7 +34,7 @@ router.post('/login', (req, res) => {
 // @access  Private
 router.get(
   '/current',
-  passport.authenticate('jwt', { session: false }),
+  passport.authenticate('jwt', {session: false}),
   (req, res) => {
     userController.init(req, res)
     userController.getCurrent()
