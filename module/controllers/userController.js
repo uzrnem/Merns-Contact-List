@@ -22,14 +22,13 @@ class UserController extends BaseController {
   }
 
   login(data) {
-    const {errors, isValid} = validateLoginInput(data);
-
-    // Check Validation
-    if (!isValid) {
-      return this.sendErrorResponse(this.payload(false, 'warning', 'Validation Errors', [], errors));
+    const {success, message, error} = validateLoginInput(data);
+    if (!success) {
+      return this.sendErrorResponse(this.payload(false, 'warning', message, [],error));
     }
     const email = data.email;
     const password = data.password;
+    const errors = {};
     // Find user by email
     this.model.findOne({email}).then(user => {
       console.log('user===========> ', user);

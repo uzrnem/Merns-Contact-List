@@ -12,7 +12,7 @@
     "server": "nodemon server.js",
     "client-webpack": "npm run wpk --prefix client",
     "client-watch": "npm run wbt --prefix client",
-    "dev": "babel-node --presets es2015 server.js",
+    "sermon": "babel-node --presets es2015 server.js",
     "devmon": "nodemon --exec babel-node --presets=es2015 -- ./server.js"
   },
   "dependencies": {
@@ -23,6 +23,7 @@
     "mongoose": "^5.2.8",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
+    "smooth-validator": "^1.0.3",
     "validator": "^10.5.0"
   },
   "devDependencies": {
