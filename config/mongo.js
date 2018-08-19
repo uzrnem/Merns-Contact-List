@@ -7,6 +7,6 @@ const mongoURI = `mongodb://${HOST}:${PORT}/${DATABASE}`;
 
 // Connect to MongoDB
 mongoose
-   .connect(mongoURI, { useNewUrlParser: true })
-   .then(() => console.log('MongoDB Connected'))
-   .catch(err => console.log(err));
+  .connect(mongoURI, { useNewUrlParser: true })
+  .then(() => console.log('MongoDB Connected'))
+  .catch(err => console.log(err));
