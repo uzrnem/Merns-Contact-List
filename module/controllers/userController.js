@@ -69,11 +69,11 @@ class UserController extends BaseController {
   }
 
   register(data) {
-    const {errors, isValid} = validateRegisterInput(data);
-    // Check Validation
-    if (!isValid) {
-      return this.sendErrorResponse(this.payload(false, 'warning', 'Validation Errors', [], errors));
+    const {success, message, error} = validateRegisterInput(data);
+    if (!success) {
+      return this.sendErrorResponse(this.payload(false, 'warning', message, [],error));
     }
+    const errors = {};
     this.model.findOne({email: data.email}).then(
       user => {
         if (user) {
