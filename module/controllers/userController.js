@@ -26,7 +26,7 @@ class UserController extends BaseController {
 
     // Check Validation
     if (!isValid) {
-      return this.sendErrorResponse(this.payload(true, 'warning', 'Validation Errors', [], errors));
+      return this.sendErrorResponse(this.payload(false, 'warning', 'Validation Errors', [], errors));
     }
     const email = data.email;
     const password = data.password;
@@ -36,7 +36,7 @@ class UserController extends BaseController {
       // Check for user
       if (!user) {
         errors.email = 'User not found';
-        return this.sendNotFoundResponse(this.payload(true, 'danger', errors.email, [], errors));
+        return this.sendNotFoundResponse(this.payload(false, 'danger', errors.email, [], errors));
       }
       // Check Password
       bcrypt.compare(password, user.password).then(isMatch => {
@@ -59,7 +59,7 @@ class UserController extends BaseController {
           );
         } else {
           errors.password = 'Password incorrect';
-          return this.sendErrorResponse(this.payload(true, 'warning', errors.password, [], errors));
+          return this.sendErrorResponse(this.payload(false, 'warning', errors.password, [], errors));
         }
       });
     }).catch(err => {
@@ -73,13 +73,13 @@ class UserController extends BaseController {
     const {errors, isValid} = validateRegisterInput(data);
     // Check Validation
     if (!isValid) {
-      return this.sendErrorResponse(this.payload(true, 'warning', 'Validation Errors', [], errors));
+      return this.sendErrorResponse(this.payload(false, 'warning', 'Validation Errors', [], errors));
     }
     this.model.findOne({email: data.email}).then(
       user => {
         if (user) {
           errors.email = 'Email already exists';
-          return this.sendErrorResponse(this.payload(true, 'warning', errors.email, [], errors));
+          return this.sendErrorResponse(this.payload(false, 'warning', errors.email, [], errors));
         } else {
           const newUser = new this.model({
             name: data.name,
