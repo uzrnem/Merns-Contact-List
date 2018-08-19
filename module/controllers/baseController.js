@@ -5,32 +5,32 @@ class BaseController {
     this.model = null
   }
 
-  init (req, res) {
+  init(req, res) {
     this.request = req
     this.response = res
   }
 
-  setModel (model) {
+  setModel(model) {
     this.model = model
   }
 
-  sendSaveResponse (data) {
+  sendSaveResponse(data) {
     return this.response.status(201).json(data)
   }
 
-  sendSuccessResponse (data) {
+  sendSuccessResponse(data) {
     return this.response.status(200).json(data)
   }
 
-  sendErrorResponse (data) {
+  sendErrorResponse(data) {
     return this.response.status(400).json(data)
   }
 
-  sendNotFoundResponse (data) {
+  sendNotFoundResponse(data) {
     return this.response.status(404).json(data)
   }
 
-	payload (
+  payload(
     success = true, //true or false
     status = 'success', // ['success', 'danger', 'warning']
     message = 'success',
@@ -38,29 +38,30 @@ class BaseController {
     errors = [],
     total = 0
   ) {
-		return { success, status, message, data, errors, total }
-	}
+    return {success, status, message, data, errors, total}
+  }
 
-  store (data) {
+  store(data) {
     return this.sendSaveResponse(
       this.payload(true, 'success', 'save success', data, [])
     )
   }
 
-  update (id) {
+  update(id) {
 
   }
+
   destroy(id) {
 
   }
 
-  get (id) {
+  get(id) {
     this.model.findById(id).then(user => {
       if (!user) {
         return this.sendNotFoundResponse(
           this.payload(false, 'warning', 'User not found', [], {
-            id : id,
-            message : 'invalid id'
+            id: id,
+            message: 'invalid id'
           })
         )
       }
@@ -70,6 +71,7 @@ class BaseController {
     })
   }
 }
+
 /*
 
 
