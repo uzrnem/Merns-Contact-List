@@ -12,6 +12,8 @@
     "server": "nodemon server.js",
     "client-webpack": "npm run wpk --prefix client",
     "client-watch": "npm run wbt --prefix client",
+    "client-development": "npm run dev --prefix client",
+    "compile-scss": "npm run scss --prefix client",
     "sermon": "babel-node --presets es2015 server.js",
     "devmon": "nodemon --exec babel-node --presets=es2015 -- ./server.js"
   },
