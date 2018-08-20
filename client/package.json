@@ -9,7 +9,7 @@
     "dev": "webpack-dev-server --content-base ./ --inline --hot",
     "wbt": "./node_modules/webpack/bin/webpack.js --watch",
     "wpk": "./node_modules/webpack/bin/webpack.js",
-    "scss": "node-sass --watch scss -o ../static/compiled/css"
+    "scss": "NODE_ENV=development webpack --config scss.config.js"
   },
   "dependencies": {
     "axios": "^0.18.0",

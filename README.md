@@ -15,7 +15,7 @@ Dependencies required
   - MongoDB
 
 
-Setup Mongo Server
+Setup Mongo Server (if u want secure connection)
 
 ```sh
 $ use begin
@@ -53,7 +53,7 @@ $ npm run client-watch
 Start Node Server
 
 ```sh
-$ npm run dev
+$ npm run sermon
 ```
 
 or (for while devlopment)

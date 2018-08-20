@@ -2,3 +2,4 @@
 /node_modules
 /public/compiled
 .idea/
+/garage/dummy.min.js

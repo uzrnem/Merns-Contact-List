@@ -16,11 +16,11 @@ module.exports = function validateProfileInput(data) {
     errors.handle = 'Profile handle is required';
   }
 
-  if (Validator.isEmpty(data.status)) {
+  if (Validator.isEmail(data.status)) {
     errors.status = 'Status field is required';
   }
 
-  if (Validator.isEmpty(data.skills)) {
+  if (Validator.equals(data.skills)) {
     errors.skills = 'Skills field is required';
   }
 
