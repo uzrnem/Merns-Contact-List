@@ -5,3 +5,6 @@ https://www.codementor.io/iykyvic/writing-your-nodejs-apps-using-es6-6dh0edw2o
 http://jasonwatmore.com/post/2017/12/07/react-redux-jwt-authentication-tutorial-example
 http://www.traversymedia.com/
 https://www.youtube.com/watch?v=owDmPTSJkrg&list=PLillGF-RfqbYlw550JoiJrHsy0BT0tCgU
+https://blog.panoply.io/postgresql-vs.-mysql
+https://www.npmjs.com/package/forever
+http://www.passportjs.org/docs/authenticate/
