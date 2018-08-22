@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 // @route   GET api/users/test
 // @desc    Tests users route
 // @access  Public
-router.get(['/home.html'], (req, res) => {
+router.get(['/home'], (req, res) => {
   indexController.loadPage(req, res, 'home.html');
 });
 

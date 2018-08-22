@@ -13,6 +13,16 @@ class BaseService {
     this.path = path;
   }
 
+  static setAuthorizationToken(token) {
+    axios.defaults.headers.common['Authorization'] = token;
+    return true;
+  }
+
+  static deleteAuthorizationToken() {
+    delete axios.defaults.headers.common['Authorization'];
+    return true;
+  }
+
   put(url, data = null, callback, errorback) {
     axios.put(this.getPath() + url, data)
     .then((response) => { callback(response) })

@@ -1,42 +1,63 @@
 import React from "react"
 import { NavLink } from "react-router-dom"
+import Form from "react-jsonschema-form"
+import cookie from 'react-cookies'
 
-//import { getList, deleteItem, getItem, addItem, editItem, getProfileCodes } from "./userActions"
+import AuthToken from '../../../common/lib/AuthToken'
+import { login } from "../actions/siteActions"
 
-export default class User extends React.Component {
+export default class Login extends React.Component {
 
   constructor(props) {
     super(props)
+    this.state = {
+      schema : {
+        "title": "Login",
+        "type": "object",
+        "required": [
+          "email",
+          "password"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "title": "Email Address"
+          },
+          "password": {
+            "type": "string",
+            "title": "Password",
+            "minLength": 6
+          }
+        }
+      },
+      uiSchema : {
+        "password" : {
+          "ui:widget" : "password"
+        }
+      },
+      formData : {}
+    }
   }
-/*
-  getProfileOptions() {
-    getProfileCodes(
+
+  onSubmit({formData}) {
+    login(formData,
       (response) => {
-        this.profileCodes = response.data.data
-        this.setState({modelKeys: this.getModelKeys()})
-      }
+      console.log(response.data)
+        const token = response.data.token
+        AuthToken.stickToken(token)
+        window.location = "home";
+      },
+      (err) => { console.error(err) }
     );
   }
-*/
+
   render() {
+    const onError = (errors) => console.log("I have", errors.length, "errors to fix");
     return (
       <div>
-        <form class="form-signin">
-          <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-          <label for="inputEmail" class="sr-only">Email address</label>
-          <input type="email" id="inputEmail" class="form-control unbottom" placeholder="Email address" required autofocus />
-          <label for="inputPassword" class="sr-only">Password</label>
-          <input type="password" id="inputPassword" class="form-control untop" placeholder="Password" required />
-          <div class="checkbox">
-            <label>
-              <input type="checkbox" value="remember-me" /> Remember me
-            </label>
-          </div>
-          <a class="btn btn-lg btn-primary btn-block" href="home.html">Sign in</a>
-          <NavLink activeClassName="active" className="nav-link mt-2" to="/register">
-            Create Account
-          </NavLink>
-        </form>
+        <Form schema={this.state.schema}
+          onSubmit={this.onSubmit}
+          onError={onError} />
       </div>
     );
   }
