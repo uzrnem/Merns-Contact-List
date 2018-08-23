@@ -1,4 +1,4 @@
-const bodyParser = require('body-parser');
+import bodyParser from 'body-parser'
 
 module.exports = (app) => {
   // Body parser middleware

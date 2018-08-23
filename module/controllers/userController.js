@@ -1,11 +1,10 @@
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const keys = require('../../config/env');
-
-const user = require('../models/User');
-const BaseController = require('./baseController');
-const validateRegisterInput = require('../validation/register');
-const validateLoginInput = require('../validation/login');
+import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
+import {secretOrKey, TOKEN_EXPIRATION_TIME} from '../../config/env'
+import validateRegisterInput from '../validation/register'
+import validateLoginInput from '../validation/login'
+import user from '../models/User'
+import BaseController from '../controllers/baseController'
 
 class UserController extends BaseController {
   constructor() {
@@ -22,58 +21,64 @@ class UserController extends BaseController {
     )
   }
 
-  login (data) {
-    const { errors, isValid } = validateLoginInput(data);
-
-    // Check Validation
-    if (!isValid) {
-      return this.sendErrorResponse(this.payload(true, 'warning', 'Validation Errors', [],errors));
+  login(data) {
+    const {success, message, error} = validateLoginInput(data);
+    if (!success) {
+      return this.sendErrorResponse(this.payload(false, 'warning', message, [],error));
     }
     const email = data.email;
     const password = data.password;
+    const errors = {};
     // Find user by email
-    User.findOne({ email }).then(user => {
+    this.model.findOne({email}).then(user => {
+      console.log('user===========> ', user);
       // Check for user
       if (!user) {
         errors.email = 'User not found';
-        return this.sendNotFoundResponse(this.payload(true, 'danger', errors.email, [],errors));
+        return this.sendNotFoundResponse(this.payload(false, 'danger', errors.email, [], errors));
       }
       // Check Password
       bcrypt.compare(password, user.password).then(isMatch => {
         if (isMatch) {
           // User Matched
-          const payload = { id: user.id, name: user.name }; // Create JWT Payload
+          const payload = {id: user.id, name: user.name}; // Create JWT Payload
           // Sign Token
           jwt.sign(
             payload,
-            keys.secretOrKey,
-            { expiresIn: 3600 },
+            secretOrKey,
+            {expiresIn: TOKEN_EXPIRATION_TIME},
             (err, token) => {
+              user.password = null;
               this.response.json({
                 success: true,
-                token: 'Bearer ' + token
+                token: 'Bearer ' + token,
+                user: user
               });
             }
           );
         } else {
           errors.password = 'Password incorrect';
-          return this.sendErrorResponse(this.payload(true, 'warning', errors.password, [],errors));
+          return this.sendErrorResponse(this.payload(false, 'warning', errors.password, [], errors));
         }
       });
-    });
+    }).catch(err => {
+      console.log('err----', err)
+      err = 'Login failed.';
+      return this.sendErrorResponse(this.payload(false, 'danger', err, [], 'Unknown Error'));
+    })
   }
 
-  register (data) {
-    const { errors, isValid } = validateRegisterInput(data);
-    // Check Validation
-    if (!isValid) {
-      return this.sendErrorResponse(this.payload(true, 'warning', 'Validation Errors', [],errors));
+  register(data) {
+    const {success, message, error} = validateRegisterInput(data);
+    if (!success) {
+      return this.sendErrorResponse(this.payload(false, 'warning', message, [],error));
     }
-    this.model.findOne({ email: data.email }).then(
+    const errors = {};
+    this.model.findOne({email: data.email}).then(
       user => {
         if (user) {
           errors.email = 'Email already exists';
-          return this.sendErrorResponse(this.payload(true, 'warning', errors.email, [],errors));
+          return this.sendErrorResponse(this.payload(false, 'warning', errors.email, [], errors));
         } else {
           const newUser = new this.model({
             name: data.name,
@@ -87,7 +92,7 @@ class UserController extends BaseController {
               newUser
                 .save()
                 .then(user => {
-                  return this.sendErrorResponse(this.payload(true, 'success', 'User created', user));
+                  return this.sendSuccessResponse(this.payload(true, 'success', 'User created', user));
                 })
                 .catch(err => console.log(err));
             });
@@ -97,6 +102,7 @@ class UserController extends BaseController {
     );
   }
 }
-var controller = new UserController()
-controller.setModel(user)
-module.exports = controller
+
+const controller = new UserController();
+controller.setModel(user);
+module.exports = controller;

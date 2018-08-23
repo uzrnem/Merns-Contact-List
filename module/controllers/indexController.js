@@ -1,10 +1,10 @@
-var fs = require('fs');
+import fs from 'fs'
 
 class IndexController {
   constructor() {
   	this.path = "/../../pages/"
   }
-  
+
   loadPage(req, res, page) {
     fs.readFile(__dirname + this.path + page, function(err, data) {
       if (err) {

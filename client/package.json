@@ -9,7 +9,7 @@
     "dev": "webpack-dev-server --content-base ./ --inline --hot",
     "wbt": "./node_modules/webpack/bin/webpack.js --watch",
     "wpk": "./node_modules/webpack/bin/webpack.js",
-    "scss": "node-sass --watch scss -o ../static/compiled/css"
+    "scss": "NODE_ENV=development webpack --config scss.config.js"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -26,8 +26,9 @@
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "history": "^4.7.2",
     "react": "^16.3.0",
+    "react-cookies": "^0.1.0",
     "react-dom": "^16.3.0",
-    "react-jsonschema-form": "^1.0.3",
+    "react-jsonschema-form": "^1.0.4",
     "react-loadable": "^5.3.1",
     "react-redux": "^5.0.7",
     "react-router": "^4.2.0",

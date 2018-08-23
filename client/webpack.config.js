@@ -30,6 +30,31 @@ module.exports = {
   plugins: debug ? [] : [
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false })
+    new webpack.optimize.UglifyJsPlugin(
+      {
+        mangle: false,
+        output: {
+          comments: true,
+          beautify: true,
+        },
+        sourcemap: false
+      }
+    )
   ],
+  stats: {
+    colors: true,
+    hash: false,
+    version: false,
+    timings: true,
+    assets: true,
+    chunks: false,
+    modules: false,
+    reasons: false,
+    children: false,
+    source: true,
+    errors: true,
+    errorDetails: true,
+    warnings: true,
+    publicPath: true
+  }
 };

@@ -1,7 +1,9 @@
-const express = require('express');
+import express from 'express'
+
+import baseController from '../controllers/baseController'
+import controller from '../controllers/contactListController'
+
 const router = express.Router();
-var baseController = require('../controllers/baseController')
-var controller = require('../controllers/contactListController')
 
 router.get(
   '/get/:userId',

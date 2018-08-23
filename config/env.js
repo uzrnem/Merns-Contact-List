@@ -3,5 +3,7 @@ module.exports = {
 	PASSWORD : "t",
 	PORT : 27017,
 	DATABASE : "begin",
-	secretOrKey: 'secret'
-}
+	HOST: `localhost`,
+	secretOrKey: 'secret',
+	TOKEN_EXPIRATION_TIME: 60 * 60 * 24
+};

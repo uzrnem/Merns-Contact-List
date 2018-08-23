@@ -1,7 +1,9 @@
-const express = require('express');
+import express from 'express'
+import fs from 'fs'
+
+import indexController from '../controllers/indexController'
+
 const router = express.Router();
-var indexController = require('../controllers/indexController')
-var fs = require('fs');
 
 // @route   GET api/users/test
 // @desc    Tests users route
@@ -13,7 +15,7 @@ router.get('/', (req, res) => {
 // @route   GET api/users/test
 // @desc    Tests users route
 // @access  Public
-router.get(['/home.html'], (req, res) => {
+router.get(['/home'], (req, res) => {
   indexController.loadPage(req, res, 'home.html');
 });
 
