@@ -10,11 +10,13 @@ export default class User extends React.Component {
     this.state = {
       name : '',
       email: '',
-      password: ''
+      password: '',
+      password2: ''
     }
     this.handleNameInput = this.handleNameInput.bind(this);
     this.handleEmailInput = this.handleEmailInput.bind(this);
     this.handlePasswordInput = this.handlePasswordInput.bind(this);
+    this.handlePasswordInput2 = this.handlePasswordInput2.bind(this);
     this.saveAndContinue = this.saveAndContinue.bind(this);
   }
 
@@ -33,6 +35,12 @@ export default class User extends React.Component {
   handlePasswordInput = (event) => {
     this.setState(
       {password: event.target.value}
+    );
+  }
+
+  handlePasswordInput2 = (event) => {
+    this.setState(
+      {password2: event.target.value}
     );
   }
 
@@ -56,9 +64,12 @@ export default class User extends React.Component {
            required autofocus value={this.state.email}
            onChange={this.handleEmailInput} />
           <label for="inputPassword" class="sr-only">Password</label>
-          <input type="password" id="inputPassword" class="form-control untop" placeholder="Password"
+          <input type="password" id="inputPassword" class="form-control untop unbottom" placeholder="Password"
            required autofocus value={this.state.password}
            onChange={this.handlePasswordInput} />
+           <input type="password" id="inputPassword2" class="form-control untop" placeholder="Password"
+            required autofocus value={this.state.password2}
+            onChange={this.handlePasswordInput2} />
         </form>
        <button class="btn btn-primary btn-sm mx-3" onClick={this.saveAndContinue}>Create Account</button>
        <NavLink activeClassName="active" className="nav-link mt-2" to="/login">

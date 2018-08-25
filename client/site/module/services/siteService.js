@@ -1,4 +1,4 @@
-import BaseService from '../../../common/services/BaseService';
+import BaseService from 'gisue';
 
 
 class SiteService extends BaseService {

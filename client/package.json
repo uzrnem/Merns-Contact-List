@@ -12,7 +12,6 @@
     "scss": "NODE_ENV=development webpack --config scss.config.js"
   },
   "dependencies": {
-    "axios": "^0.18.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
     "babel-plugin-add-module-exports": "^0.2.1",
@@ -23,6 +22,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "gisue": "^2.0.0",
     "history": "^4.7.2",
     "react": "^16.3.0",
     "react-cookies": "^0.1.0",
