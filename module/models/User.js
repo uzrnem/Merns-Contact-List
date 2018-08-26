@@ -1,4 +1,5 @@
 import mongoose, { Schema } from 'mongoose'
+import { validator as checkValidation } from 'smooth-validator'
 
 // Create Schema
 const UserSchema = new Schema(
@@ -26,7 +27,7 @@ UserSchema.methods.validator = function(data) {
     email : 'required|email|min:5|max:100',
     password: 'required|min:6|max:30'
   }
-  return validator(data, rules)
+  return checkValidation(data, rules)
 };
 
 let User = mongoose.model('users', UserSchema);
