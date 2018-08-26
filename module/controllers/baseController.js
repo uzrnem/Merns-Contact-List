@@ -5,9 +5,10 @@ class BaseController {
     this.model = null
   }
 
-  init(req, res) {
+  init(req, res, next) { //Act as middleware
     this.request = req
     this.response = res
+    next()
   }
 
   setModel(model) {

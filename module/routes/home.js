@@ -1,22 +1,24 @@
 import express from 'express'
-import fs from 'fs'
+import path from 'path'
 
-import indexController from '../controllers/indexController'
-
+import User from '../models/User'
+import JwtVerify from '../helper/jwtVerify'
 const router = express.Router();
 
-// @route   GET api/users/test
-// @desc    Tests users route
-// @access  Public
-router.get(['/', '/login'], (req, res) => {
-  indexController.loadPage(req, res, 'login.html');
-}); //res.redirect('public/index.html');
-
-// @route   GET api/users/test
-// @desc    Tests users route
-// @access  Public
-router.get('/home', (req, res) => {
-  indexController.loadPage(req, res, 'home.html');
-});
+router
+  .get(['/', '/login'], (req, res) => {
+    JwtVerify( req,
+      (payload) => res.redirect('/home?msg=You are logged in'),
+      () => res.sendFile(path.resolve(__dirname + "/../../pages/login.html")),
+      () => res.sendFile(path.resolve(__dirname + "/../../pages/login.html"))
+    );
+  })
+  .get('/home', (req, res, next) => {
+    JwtVerify( req,
+      (payload) => res.sendFile(path.resolve(__dirname + "/../../pages/home.html")),
+      () => res.redirect('/login?msg=Token Expired'),
+      () => res.redirect('/login?msg=Login First')
+    );
+  });
 
 module.exports = router;

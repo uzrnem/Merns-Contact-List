@@ -47,7 +47,7 @@ class BaseModel extends Model
         return $this->validateRules;
     }
 
-    public function saveRecord($rawData)
+    public function saveData($rawData)
     {
         $columns = \Schema::getColumnListing( $this->getTable() ); //self::getTable() );
 

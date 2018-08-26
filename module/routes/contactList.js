@@ -1,24 +1,13 @@
 import express from 'express'
 
-import baseController from '../controllers/baseController'
 import controller from '../controllers/contactListController'
 
 const router = express.Router();
 
-router.get(
-  '/get/:userId',
-  (req, res) => {
-    controller.init(req, res)
-    controller.get(req.params.userId)
-  }
-);
-
-router.put(
-  '/edit',
-  (req, res) => {
-    controller.init(req, res)
-    controller.store(req.body)
-  }
-);
+router
+  .use((req, res, next) => { controller.init(req, res, next) })
+  .get('/test', (req, res) => res.json({msg: 'Contact List Works'}))
+  .get('/get/:userId', (req, res) => controller.get(req.params.userId))
+  .put('/edit', (req, res) => controller.store(req.body));
 
 module.exports = router;

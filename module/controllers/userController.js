@@ -1,8 +1,8 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import {secretOrKey, TOKEN_EXPIRATION_TIME} from '../../config/env'
-import validateRegisterInput from '../validation/register'
-import validateLoginInput from '../validation/login'
+import { SECRET_JWT_KEY, TOKEN_EXPIRATION_TIME} from '../../env'
+import validateRegisterInput from '../validators/register'
+import validateLoginInput from '../validators/login'
 import user from '../models/User'
 import BaseController from '../controllers/baseController'
 
@@ -45,7 +45,7 @@ class UserController extends BaseController {
           // Sign Token
           jwt.sign(
             payload,
-            secretOrKey,
+            SECRET_JWT_KEY,
             {expiresIn: TOKEN_EXPIRATION_TIME},
             (err, token) => {
               user.password = null;
