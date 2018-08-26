@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 
-class BaseModel extends Model
+class laravelModel extends Model
 {
     protected $isValidationError = false;
     protected $validationErrors = [];
