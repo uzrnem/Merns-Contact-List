@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-import { HOST, PORT, DATABASE } from '../env'
+import { HOST, PORT, DATABASE } from '../../env'
 
 // const mongoURI = `mongodb://${USER_NAME}:${PASSWORD}@localhost:${PORT}/${DATABASE}`
 const mongoURI = `mongodb://${HOST}:${PORT}/${DATABASE}`;
