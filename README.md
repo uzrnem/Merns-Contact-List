@@ -15,6 +15,13 @@ Dependencies required
   - MongoDB
 
 
+Setup Project for First Time
+
+```sh
+$ sh ./setup.sh
+```
+
+
 Setup Mongo Server (if u want secure connection)
 
 ```sh

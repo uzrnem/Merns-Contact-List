@@ -2,12 +2,12 @@ import { ExtractJwt , Strategy as JwtStrategy } from 'passport-jwt'
 import passport from 'passport'
 import mongoose from 'mongoose'
 
-import User from '../module/models/User'
-import {secretOrKey} from '../config/env'
+import User from '../models/User'
+import {SECRET_JWT_KEY} from '../../env'
 
 const opts = {
   jwtFromRequest : ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey
+  secretOrKey : SECRET_JWT_KEY
 };
 
 module.exports = app => {

@@ -3,11 +3,12 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = {
   mode: 'development',
   entry: {
-    admin: './scss/main.scss'
+    index: './scss/about.scss',
+    home: './scss/main.scss'
   },
   output: {
     path: __dirname + '/../',
-    filename: "garage/dummy.min.js"
+    filename: "garage/private/[name].min.js"
   },
   module: {
     rules: [

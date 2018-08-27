@@ -9,8 +9,3 @@ module.exports = (app, express) => {
   app.use('/api/contact-list', contactList);
   app.use('/', home);
 };
-/*  // Set static folder
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-  });
-*/

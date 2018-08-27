@@ -20,5 +20,5 @@ const ContactListSchema = new Schema({
   }
 });
 
-const ContactList = mongoose.model('contact_list', ContactListSchema);
+let ContactList = mongoose.model('contact_list', ContactListSchema);
 module.exports = ContactList
