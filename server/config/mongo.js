@@ -1,9 +1,11 @@
-import mongoose from 'mongoose'
+const mongoose = require("mongoose");
 
-import { HOST, PORT, DATABASE } from '../../env'
+const { HOST, PORT, DATABASE } = require('../../env');
 
 // const mongoURI = `mongodb://${USER_NAME}:${PASSWORD}@localhost:${PORT}/${DATABASE}`
-const mongoURI = `mongodb://${HOST}:${PORT}/${DATABASE}`;
+//const mongoURI = `mongodb://${HOST}:${PORT}/${DATABASE}`;
+const mongoURI = `mongodb://localhost:2717/test`;
+
 
 // Connect to MongoDB
 mongoose

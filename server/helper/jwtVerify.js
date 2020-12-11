@@ -1,9 +1,7 @@
-import { Strategy as JwtStrategy } from 'passport-jwt'
-
-import User from '../models/User'
-import { SECRET_JWT_KEY } from '../../env'
-
-
+const { Strategy }  = require("passport-jwt");
+const User = require("../models/User");
+const { SECRET_JWT_KEY } = require('../../env');
+JwtStrategy = Strategy
 module.exports = (request, tokenVerified, tokenExpired, tokenNotFound) => {
   let token = null
   if (request && request.cookies) {

@@ -1,5 +1,5 @@
-import mongoose, { Schema } from 'mongoose'
-
+const mongoose  = require("mongoose");
+const { Schema }  = require("mongoose");
 // Create Schema
 const ContactListSchema = new Schema({
   name: {

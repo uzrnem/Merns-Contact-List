@@ -1,6 +1,6 @@
-import home from './home'
-import users from './users'
-import contactList from './contactList'
+const home = require("./home");
+const users = require("./users");
+const contactList = require('./contactList');
 
 module.exports = (app, express) => {
   app.use('/public', express.static('public'));

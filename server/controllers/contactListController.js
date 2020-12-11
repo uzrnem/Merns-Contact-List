@@ -1,5 +1,5 @@
-import ContactList from '../models/ContactList'
-import BaseController from './baseController'
+const ContactList = require("../models/ContactList");
+const BaseController = require("./baseController");
 
 class ContactListController extends BaseController {
 }

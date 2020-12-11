@@ -1,6 +1,5 @@
-import express from 'express'
-
-import controller from '../controllers/contactListController'
+const express = require("express");
+const controller = require("../controllers/contactListController");
 
 const router = express.Router();
 

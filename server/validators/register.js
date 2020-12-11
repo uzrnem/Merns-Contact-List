@@ -1,4 +1,4 @@
-import { validator } from 'smooth-validator'
+const { validator }   = require("smooth-validator");
 
 module.exports = function validateRegisterInput(data) {
   const rules = {

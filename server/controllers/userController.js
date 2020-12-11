@@ -1,11 +1,10 @@
-import bcrypt from 'bcryptjs'
-import jwt from 'jsonwebtoken'
-import { SECRET_JWT_KEY, TOKEN_EXPIRATION_TIME} from '../../env'
-import validateRegisterInput from '../validators/register'
-import validateLoginInput from '../validators/login'
-import user from '../models/User'
-import BaseController from '../controllers/baseController'
-
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const { SECRET_JWT_KEY, TOKEN_EXPIRATION_TIME} = require("../../env");
+const validateRegisterInput = require("../validators/register");
+const validateLoginInput = require("../validators/login");
+const user = require("../models/User");
+const BaseController = require("../controllers/baseController");
 class UserController extends BaseController {
   constructor() {
     super()

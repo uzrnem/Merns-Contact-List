@@ -1,5 +1,5 @@
-import bodyParser from 'body-parser'
-import cookieParser from 'cookie-parser'
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 
 module.exports = (app) => {
   // Body parser middleware

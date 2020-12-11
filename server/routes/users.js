@@ -1,7 +1,7 @@
-import express from 'express'
-import passport from 'passport'
+const express = require("express");
+const passport = require("passport");
 
-import userController from '../controllers/userController'
+const userController = require("../controllers/userController");
 
 const router = express.Router()
 

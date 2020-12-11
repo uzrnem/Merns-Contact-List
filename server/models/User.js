@@ -1,6 +1,7 @@
-import mongoose, { Schema } from 'mongoose'
-import { validator as checkValidation } from 'smooth-validator'
-
+const mongoose  = require("mongoose");
+const { Schema }  = require("mongoose");
+const { validator }   = require("smooth-validator");
+checkValidation = validator
 // Create Schema
 const UserSchema = new Schema(
   {

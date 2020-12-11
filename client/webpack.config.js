@@ -9,6 +9,9 @@ module.exports = {
   entry: {
     site: './site/client.jsx'
   },
+  resolve: {
+    extensions: ['.ts', '.js']
+  },
   performance: { hints: false },
   module: {
     rules: [
