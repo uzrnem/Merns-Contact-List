@@ -14,7 +14,3 @@ NodeJs - Express
 Javascript - VueJS
 
 Javascript - MERN
-
-Socket APP
-
-Axios Wrapper class
