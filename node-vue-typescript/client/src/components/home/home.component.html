@@ -1,0 +1,39 @@
+<div>
+  <div class="container">
+    <form method="POST" @submit.prevent="onSubmit">
+      <div class="row form-group p-3">
+        <div class="col-sm-10">
+          <input type="name" class="form-control" id="name" v-model="name" placeholder="Tags">
+        </div>
+        <div class="col-sm-2">
+          <button type="submit" class="btn btn-primary">Add Tag</button>
+        </div>
+      </div>
+    </form>
+    <div class="row">
+      <div class="col-sm-12">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>name</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(value, key) in tagList">
+              <td v-if="!value.edit">{{value.name}}</td>
+              <td v-if="value.edit">
+                <input type="name" class="form-control" id="name" v-model="value.name" placeholder="Tags">
+              </td>
+              <td>
+                <button type="button" class="btn btn-info" v-if="!value.edit" @click="editRow(key)">Edit</button>
+                <button type="button" class="btn btn-primary" v-if="value.edit" @click="updateRow(value._id, value.name, key)">Save</button>
+                <button type="button" class="btn btn-warning" @click="deleteRow(value._id)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

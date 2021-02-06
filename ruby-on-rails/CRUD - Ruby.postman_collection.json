@@ -1,0 +1,254 @@
+{
+	"info": {
+		"_postman_id": "21f501fb-c116-4428-9fc9-bb0720faf7c9",
+		"name": "CRUD - Ruby",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiJ9.IiM8VXNlcjoweDZlNzg0YTkzPiI.8XGDtcL4X0Nn_Qan7ZycNcBTYgUYI-nJRt3E9FjRBh4",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"Bhagyesh Patel\",\n\t\"password\" : \"bhagyesh\",\n\t\"email\" : \"bhagyeshsunilpatel@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3000/register"
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiJ9.IiM8VXNlcjoweDZlNzg0YTkzPiI.8XGDtcL4X0Nn_Qan7ZycNcBTYgUYI-nJRt3E9FjRBh4",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"Bhagyesh Patel\",\n\t\"password\" : \"bhagyesh\",\n\t\"email\" : \"bhagyeshsunilpatel@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3000/login"
+			},
+			"response": []
+		},
+		{
+			"name": "Add",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjp7ImlkIjoxLCJuYW1lIjoiQmhhZ3llc2ggUGF0ZWwiLCJlbWFpbCI6ImJoYWd5ZXNoc3VuaWxwYXRlbEBnbWFpbC5jb20ifSwiZXhwIjoxNTgyNDU0NDI1LCJpYXQiOjE1ODI0NTA4MjV9.n1u3u6FBx24cH3jwtD3ws-0V72WE_0yQtC0xDW5AGFg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"Bhagyesh Patel\",\n\t\"mobile\" : \"bhagyesh\",\n\t\"email\" : \"bhagyeshsunilpatel@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3000/contact"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjp7ImlkIjoxLCJuYW1lIjoiQmhhZ3llc2ggUGF0ZWwiLCJlbWFpbCI6ImJoYWd5ZXNoc3VuaWxwYXRlbEBnbWFpbC5jb20ifSwiZXhwIjoxNTgyNjIxODc0LCJpYXQiOjE1ODI2MTgyNzR9.jfrqH4PjD8A0uvImeLCpDxh3KAVgbzGpm_iHa9SzBrA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"Bhagyesh Patel\",\n\t\"mobile\" : \"bhagyesh\",\n\t\"email\" : \"bhagyeshsunilpatel@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3000/contact/2"
+			},
+			"response": []
+		},
+		{
+			"name": "List",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjp7ImlkIjoxLCJuYW1lIjoiQmhhZ3llc2ggUGF0ZWwiLCJlbWFpbCI6ImJoYWd5ZXNoc3VuaWxwYXRlbEBnbWFpbC5jb20ifSwiZXhwIjoxNTgzMTU5OTIzLCJpYXQiOjE1ODMxMjM5MjN9.JR4mg9iqY8Y352H-DYIzHTPr0qkIc-IOSyuanD8ySA4",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"Bhagyesh Patel\",\n\t\"mobile\" : \"bhagyesh\",\n\t\"email\" : \"bhagyeshsunilpatel@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/contact?page=2&limit=3&filter={\"name\": \"Bhagyesh\"}&sort={\"key\":\"id\",\"value\":\"desc\"}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"contact"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						},
+						{
+							"key": "limit",
+							"value": "3"
+						},
+						{
+							"key": "filter",
+							"value": "{\"name\": \"Bhagyesh\"}"
+						},
+						{
+							"key": "sort",
+							"value": "{\"key\":\"id\",\"value\":\"desc\"}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjp7ImlkIjoxLCJuYW1lIjoiQmhhZ3llc2ggUGF0ZWwiLCJlbWFpbCI6ImJoYWd5ZXNoc3VuaWxwYXRlbEBnbWFpbC5jb20ifSwiZXhwIjoxNTgyODcxMTAwLCJpYXQiOjE1ODI4MzUxMDB9.vaT0rcHCobNX3LubZVbs-LVn4IjSH7hesqajfTDi034",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"Bhagyesh Patel\",\n\t\"mobile\" : \"9604400880\",\n\t\"email\" : \"uzrnem@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3000/contact/2"
+			},
+			"response": []
+		},
+		{
+			"name": "Get",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjp7ImlkIjoxLCJuYW1lIjoiQmhhZ3llc2ggUGF0ZWwiLCJlbWFpbCI6ImJoYWd5ZXNoc3VuaWxwYXRlbEBnbWFpbC5jb20ifSwiZXhwIjoxNTgyODcxMTAwLCJpYXQiOjE1ODI4MzUxMDB9.vaT0rcHCobNX3LubZVbs-LVn4IjSH7hesqajfTDi034"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"Bhagyesh Patel\",\n\t\"mobile\" : \"9604400880\",\n\t\"email\" : \"uzrnem@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3000/contact/1"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

@@ -1,0 +1,32 @@
+{
+  "name": "vuejs-typescript",
+  "version": "1.0.0",
+  "description": "VueJS App",
+  "author": "Bhagyesh Sunil Patel",
+  "scripts": {
+    "dev": "vue-cli-service serve",
+    "prod": "vue-cli-service build"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "bootstrap": "^4.3.1",
+    "jquery": "^3.3.1",
+    "popper.js": "^1.14.7",
+    "vue": "^2.6.8",
+    "vue-class-component": "^7.0.1",
+    "vue-property-decorator": "^7.3.0",
+    "vue-router": "^3.0.2"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-typescript": "^3.4.1",
+    "@vue/cli-service": "^3.4.1",
+    "awesome-typescript-loader": "^5.2.1",
+    "html-loader": "^0.5.5",
+    "node-sass": "^4.11.0",
+    "sass-loader": "^7.1.0",
+    "ts-loader": "^5.3.3",
+    "typescript": "^3.3.3333",
+    "url-loader": "^1.1.2",
+    "vue-template-compiler": "^2.6.8"
+  }
+}
