@@ -1,0 +1,184 @@
+<!--
+ * Chit Chat v1.0.0
+ * Developed By Bhagyesh Sunil Patel (https://github.com/uzrnem/chit-chat)
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Chit Chat</title>
+  <link rel="stylesheet" href="/cdn/bootstrap.min.css">
+  <link rel="stylesheet" href="/cdn/chit-chat.css">
+  <script src="/cdn/jquery.min.js"></script>
+  <script src="/cdn/bootstrap.min.js"></script>
+  <script src="/cdn/socket.io.js"></script>
+</head>
+<body class="background-ivory">
+  <div class="container" id="login">
+    <h2>Login</h2>
+    <div>
+      <div class="form-group">
+        <label for="name">Name: </label>
+        <input type="text" class="form-control" id="name" placeholder="Enter name" name="name">
+      </div>
+
+      <div class="form-group">
+        <label for="color">Select color (select one):</label>
+        <select class="form-control" id="color">
+          <option value="Tomato">Tomato</option>
+          <option value="Orange">Orange</option>
+          <option value="DodgerBlue">Dodger Blue</option>
+          <option value="MediumSeaGreen">Medium Sea Green</option>
+          <option value="Gray">Gray</option>
+          <option value="SlateBlue">Slate Blue</option>
+          <option value="Violet">Violet</option>
+          <option value="LightGray">Light Gray</option>
+        </select>
+      </div>
+      <a id="log" class="btn btn-default">Submit</a>
+    </div>
+  </div>
+  <div class="container" id="home">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="header" id="header">Welcome to Chit Chat</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-3 overflow-hidden">
+        <div class="list-users p-0 full-height overflow-y" id="user-list">
+          <a class="list-user" onclick="changeRoom('overall')">Public<span id="overall"  class="badge badge-primary pull-right">active</span></a>
+        </div>
+      </div>
+      <div class="col-sm-8 full-height overflow-hidden">
+        <div class="list-messages" id="messages">
+        </div>
+        <div style="bottom: 0px; position: absolute; margin-right: 15px;">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search" id="msg">
+            <div class="input-group-btn">
+              <button class="btn btn-default" type="submit" id="send">Send</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+<script>
+$("#home").hide();
+
+function scrollDown() {
+  var element = document.getElementById("messages");
+  element.scrollTop = element.scrollHeight;
+}
+function myMessage(message) {
+  return '<div class="list-block"><div class="list-message right">'+ message +'</div></div>';
+}
+function groupMessage(data, message) {
+  return '<div class="list-block">' +
+      '<div class="list-circle">'+ data.nickname +'</div>'+ // style="color:'+ data.color +'"
+      '<div class="list-message left"><div class="sender">'+
+       data.name +': </div>' + message +'</div>'+
+    '</div>';
+}
+function friendMessage(data, message) {
+  return '<div class="list-block"><div class="list-message left ml-0">' + message +'</div></div>';
+}
+scrollDown();
+var socket = io();
+var user = {
+  id : '',
+  name : '',
+  color : ''
+};
+var sendTo = 'overall';
+var rooms = {'overall' : []};
+socket.on('ping msg', function(data){
+  console.log('ping msg : ' + data);
+});
+socket.on('welcome', function(data){
+  user.id = data.socketId;
+  user.name = data.name;
+  user.color = data.color;
+  user.nickname = data.nickname;
+});
+$("#send").click(function(){
+  socket.emit("send-msg", {"sendTo": sendTo, "message": $("#msg").val()});
+    $("#msg").val('');
+});
+$("#log").click(function(){
+  $("#login").hide();
+  $("#home").show();
+  $("#header").html('<h1 style="color:'+ $("#color").val() +';">Welcome ' + $("#name").val() + "</h1>");
+  name = $("#name").val();
+  color = $("#color").val();
+  socket.emit("add-user", {"name": name, "color": color});
+  return false;
+});
+socket.on('chat-message', function(data) {
+  if (sendTo == data.group) {
+    if (data.sendFrom == user.id) {
+      $("#messages").append(myMessage(data.message));
+    } else if (sendTo == 'overall'){
+      $("#messages").append(groupMessage(clients[data.sendFrom], data.message));
+    } else {
+      $("#messages").append(friendMessage(clients[data.sendFrom], data.message));
+    }
+    scrollDown();
+  } else {
+    var count = $("#" + data.group).html();
+    $("#" + data.group).html(parseInt(count)+1)
+  }
+  if (!rooms[data.group]) {
+    rooms[data.group] = [];
+  }
+  rooms[data.group].push(data);
+});
+socket.on('client list', function(data){
+  clients = data;
+  $("#user-list").html('<a class="list-user" onclick=changeRoom("overall")>Public<span class="badge badge-primary pull-right" id="overall">active</span></a>');
+  for (var socketId in data) {
+    if (data.hasOwnProperty(socketId) && user.id != socketId) {
+      $("#user-list").append(
+        '<a class="list-user" onclick=changeRoom("'+socketId+'")>'+ // style="color:' + data[socketId].color + '"
+         data[socketId].name + '<span class="badge pull-right" style="background-color:' + data[socketId].color +
+         '" id="'+socketId+'">0</span></a>'
+      );
+    }
+  }
+  changeRoom ('overall');
+});
+function changeRoom (st) {
+  $("#msg").val('');
+  $("#" + sendTo).html('0');
+  $("#" + st).html('active')
+  sendTo = st;
+  $("#messages").html('');
+  for (var socketId in rooms[st]) {
+    if (rooms[st][socketId].sendFrom == user.id) {
+      $("#messages").append(myMessage(rooms[st][socketId].message));
+    } else if (st == 'overall'){
+      $("#messages").append(groupMessage(clients[rooms[st][socketId].sendFrom], rooms[st][socketId].message));
+    } else {
+      $("#messages").append(friendMessage(clients[rooms[st][socketId].sendFrom], rooms[st][socketId].message));
+    }
+    scrollDown();
+  }
+};
+</script>
+</html>
+
+<!-- div class="list-messages" id="messages">
+  <div class="list-block">
+    <div class="list-circle">B</div>
+    <div class="list-message left"><div class="sender">Bhagyesh</div> Jfsknf Ldjfdfnd THsose THsd</div>
+  </div>
+  <div class="list-block">
+    <div class="list-circle">G</div>
+    <div class="list-message left"> THso Isee Pmfsknf Jdjfdfnd</div>
+  </div>
+  <div class="list-block">
+    <div class="list-message right">  THsoseem Jfsknf Ldjfdfnd</div>
+  </div>
+</div -->
