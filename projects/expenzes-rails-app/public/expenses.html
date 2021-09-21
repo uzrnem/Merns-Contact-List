@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Expenze</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./bootstrap.min.css">
+  <script src="./jquery.min.js"></script>
+  <script src="./axios.min.js"></script>
+  <script src="./bootstrap.min.js"></script>
+  <script type="text/javascript" src="./loader.js"></script>
+  <link rel="stylesheet" href="./bulma2.css">
+  <style>
+  body {
+    background-color: #eeeeee;
+  }
+  .navbar {
+    margin-bottom: 1rem !important;
+  }
+  .pull-left {
+    float: left;
+  }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Expenze</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="home.html">Passbook</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="chart.html">Chart</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="expenses.html">Expenses</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="account.html">Accounts</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="container" id="transaction-app">
+    <div class="row justify-content-md-center">
+      <div class="col-sm-7">
+      </div>
+      <div class="col-sm-5">
+        <div id="select-option"></div>
+      </div>
+      <div class="col-sm-12">
+        <div id="piechart"></div>
+      </div>
+    </div>
+  </div>
+
+<script type="text/javascript">
+  // Load google charts
+  google.charts.load('visualization', "1", {'packages':['corechart']}); //current
+  google.charts.setOnLoadCallback(drawChart);
+
+  var dateToday = new Date();
+  var urlString = dateToday.getFullYear() + "/" + ( dateToday.getMonth() + 1);
+  // Draw the chart and set the chart values
+  function drawChart() {
+    axios.get('accounts/chart/expenses/' + urlString)
+    .then((response) => {
+      var data = google.visualization.arrayToDataTable(response.data.holding);
+      var options = {
+        title:'My Expenses of ' + Number(response.data.expenses).toLocaleString('en') + ' Rs.', height: 600, pieSliceText: 'percentage', is3D: true,
+        chartArea: { width : '90%', height: '80%'}, legend: {
+            position: 'labeled',
+            labeledValueText: 'both',
+            textStyle: {
+                color: 'black',
+                fontSize: 14
+            }
+        },
+      }
+      var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+      chart.draw(data, options);
+      showSelectOptions(response.data.months);
+    });
+  }
+  function showSelectOptions(list) {
+    if (document.getElementById("select-option").childNodes.length == 0) {
+      var select = document.createElement("select");
+      select.name = "Month";
+      select.id = "month-year";
+      select.value = urlString;
+
+      var option = document.createElement("option");
+      option.value = "0/0";
+      option.text = "Overall";
+      select.appendChild(option);
+
+      for (const obj of list) {
+          var option = document.createElement("option");
+          option.value = obj.year + "/" + obj.month;
+          option.text = obj.mon.toUpperCase() + " " + obj.year;
+          if (dateToday.getFullYear() == obj.year && ( dateToday.getMonth() + 1) == obj.month) {
+            option.selected = true;
+          }
+          select.appendChild(option);
+      }
+
+      var label = document.createElement("label");
+      label.innerHTML = "Choose Month for Expenses: "
+      label.htmlFor = "months";
+
+      document.getElementById("select-option").appendChild(label).appendChild(select);
+      document.getElementById("month-year").addEventListener("change", newMonthSelected);
+    }
+  }
+
+  function newMonthSelected() {
+    urlString = document.getElementById("month-year").value;
+    console.log(urlString);
+    google.charts.setOnLoadCallback(drawChart);
+  }
+  //year = 2021;
+  //month = 6;
+  //google.charts.setOnLoadCallback(drawChart);
+</script>
+</body>
+</html>

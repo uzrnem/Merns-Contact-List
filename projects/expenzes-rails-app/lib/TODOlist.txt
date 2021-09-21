@@ -1,0 +1,8 @@
+Top 10 monthly expenses
+Total expense, total budget
+Show monthly expense
+Show expense per tag
+write trigger for udpate
+write trigger for delete
+create foreign keys and use slugs in database, start storing them
+split in user_group

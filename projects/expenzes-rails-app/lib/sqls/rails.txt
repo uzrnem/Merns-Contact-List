@@ -1,0 +1,93 @@
+rails db:rollback
+rails g scaffold TransactionType name:text --force
+rails new expenze -d mysql --api
+rails g scaffold Tag name:text transaction_types:references
+rails g scaffold AccountType name:text
+rails g scaffold Tag name:text account_types:references 'amount:decimal{7,2}' --force
+rails g scaffold Tag name:text transaction_types:references --force
+rails g scaffold Account name:text account_types:references 'amount:decimal{7,2}'
+rails g scaffold Activity from_account:references to_account:references tags:references 'amount:decimal{7,2}' event_date:date remarks:text transaction_types:references
+rails g scaffold Passbook accounts:references 'previous_balance:decimal{7,2}' 'credit:decimal{7,2}' 'debit:decimal{7,2}' 'balance:decimal{7,2}'
+rails d scaffold Transaction
+gem install ap
+bundle
+mysqldump -u root -p expenze_development > ~/expenze/garage/expenze_development.sql
+
+
+rails db:drop RAILS_ENV=test
+rails db:create RAILS_ENV=test
+rails db:migrate RAILS_ENV=test
+rails db:seed RAILS_ENV=test
+
+rails c RAILS_ENV=test
+rails c -e test
+@users = User.joins("LEFT JOIN user_group as ug ON ug.user_id = users.id")
+
+'act.id, act.amount, act.event_date, act.remarks, act.created_at, act.updated_at'
+.reverse
+
+
+  Transaction Exists? (1.0ms)  SELECT 1 AS one FROM `transactions` INNER JOIN `accounts` ON `accounts`.`id` = `transactions`.`from_account_id` LIMIT 1
+  Transaction Load (1.1ms)  SELECT transactions.*, from_accounts.name FROM `transactions` INNER JOIN `accounts` ON `accounts`.`id` = `transactions`.`from_account_id`
+
+@users = User.joins("LEFT JOIN user_group as ug ON ug.user_id = users.id")
+
+
+
+Author.left_outer_joins(:posts).distinct.select('authors.*, COUNT(posts.*) AS posts_count').group('authors.id')
+
+
+Author.left_outer_joins(:posts).distinct.select('authors.*, COUNT(posts.*) AS posts_count').group('authors.id')
+
+render json: Tag.joins(:transaction_type).where(transaction_types: { slug: transactionType})
+
+Client.joins(:orders).where('orders.created_at' => time_range)
+
+
+rails g controller index create request invite join login
+rails generate task db
+lsof -wni tcp:3000
+kill -9 1732
+rails g model Article --parent=Content
+rails d model House
+rails g model content/Article --parent=Content -s
+
+rails db:environment:set RAILS_ENV=test
+rails db:release RAILS_ENV=test
+rails RAILS_ENV=test db:seed
+rails test:controllers
+rails g migration CreateJoinTableAstrickContent astrick content
+#### If you want to use SQLite (not recommended)
+rails new myapp
+rails new MYAPP -T # The -T option tells rails not to include Test::Unit
+uzrnem@gisue:~/expenze$ rails db:release RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1
+
+
+#### If you want to use MySQL
+rails new myapp -d mysql
+
+#### If you want to use Postgres
+rails new myapp -d postgresql
+
+# Move into the application directory
+cd myapp
+
+# If you setup MySQL or Postgres with a username/password, modify the
+# config/database.yml file to contain the username/password that you specified
+
+# Create the database
+rake db:create
+
+rails server
+
+rails generate model role id:integer name:string
+:primary_key, :string, :text, :integer, :float, :decimal, :datetime, :timestamp,
+:time, :date, :binary, :boolean, :references
+
+If constant is already initialized
+bundle update
+then
+bundle clean --force cleared it up for me when I ran into this one.
+
+  t.string :name
+t.references :transaction_types

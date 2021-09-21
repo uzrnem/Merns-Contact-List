@@ -1,0 +1,91 @@
+body {
+  -webkit-box-sizing: border-box;
+}
+.bulma {
+  font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  display: flex;
+  font-size: 16px;
+}
+.bulma-page > a, .bulma-page > ul > li > a {
+  border-radius: 4px;
+  margin: 0.25rem;
+  cursor: pointer;
+  text-decoration: none;
+}
+.bulma-nav-ul > .nav-item > .bulma-nav-link {
+  margin-left: -1px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.bulma > a, .bulma > ul > li > a {
+  min-width: 2.5em;
+  position: relative;
+  float: left;
+  border: 1px solid #898989;
+  color: #363636;
+  justify-content: center;
+  padding-bottom: calc(0.5em - 1px);
+  padding-left: calc(0.75em - 1px);
+  padding-right: calc(0.75em - 1px);
+  padding-top: calc(0.5em - 1px);
+  display: inline-flex;
+}
+.bulma-nav-link, .bulma-page-link {
+  background-color: #fff;
+}
+.bulma-nav-ul {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+.bulma-nav-ul > li {
+    display: inline;
+}
+.bulma-nav-ul > li:first-child > a {
+    margin-left: 0;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+.bulma-nav-ul>li:last-child>a {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+.bulma-nav-ul>.is-current>a, .bulma-page-ul>.is-current>a {
+    z-index: 3;
+    color: #fff;
+    cursor: default;
+    background-color: #286090;
+    border-color: #3273dc;
+}
+.bulma-nav-ul>.is-current>a:hover, .bulma-page-ul>.is-current>a:hover {
+  opacity: 1 !important;
+}
+.bulma-nav-ul > .nav-item > .bulma-nav-link:hover, .bulma-nav-ul > .nav-item > .bulma-nav-link:focus,
+.bulma-page > a:hover, .bulma-page > a:focus,
+.bulma-page > ul > li > a:hover, .bulma-page > ul > li > a:focus {
+    color: #fff;
+    background-color: #286090;
+    border-color: #204d74;
+    text-decoration: none;
+    opacity: .8;
+}
+.bulma-nav-ul > .nav-item > .bulma-nav-link[disabled],
+.bulma-page > a[disabled],
+.bulma-page > ul > li > a[disabled] {
+    background-color: #fff;
+    border-color: #dbdbdb;
+    box-shadow: none;
+    opacity: .5;
+    cursor: not-allowed;
+    color: #363636;
+}
+.bulma-page-ul {
+  margin: 0rem;
+  display: flex;
+}
+.bulma-page-ellipsis {
+    color: #b5b5b5;
+    pointer-events: none;
+    border: 1px solid transparent !important;
+    min-width: 2.5em;
+    padding: 1rem;
+}

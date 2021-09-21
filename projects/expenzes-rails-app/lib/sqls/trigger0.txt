@@ -1,0 +1,15 @@
+DELIMITER $$
+CREATE TRIGGER after_cc_trigger
+AFTER INSERT
+ON activities FOR EACH ROW
+BEGIN
+DECLARE old_balance decimal(20,2);
+DECLARE transaction_type varchar(20);
+
+IF NEW.from_account_id IS NULL THEN
+  set old_balance = ( select amount from accounts where id = NEW.to_account_id );
+  set transaction_type = ( select id from transaction_types where slug = 'credit' );
+  INSERT INTO passbooks(account_id, activity_id, previous_balance, transaction_type_id, balance, created_at, updated_at)
+  VALUES(NEW.to_account_id, NEW.id, -NEW.amount, transaction_type, 0, now(), now());
+END IF;
+END $$

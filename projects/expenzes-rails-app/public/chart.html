@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Expenze</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./bootstrap.min.css">
+  <script src="./jquery.min.js"></script>
+  <script src="./axios.min.js"></script>
+  <script src="./bootstrap.min.js"></script>
+  <script type="text/javascript" src="./loader.js"></script>
+  <link rel="stylesheet" href="./bulma2.css">
+  <style>
+  body {
+    background-color: #eeeeee;
+  }
+  p {
+    margin: 0 !important;
+  }
+  :root {
+    --padding-x-table: 20px;
+  }
+  .table>tbody>tr>td {
+    padding: 3px 4px 1px 8px;
+  }
+  .navbar {
+    margin-bottom: 1rem !important;
+  }
+  .pull-left {
+    float: left;
+  }
+  .pull-right {
+    float: right;
+  }
+  .font-14 {
+    font-size: 14px;
+  }
+  .t-italic {
+    font-style: italic;
+  }
+  .t-blue{
+    color: #0c3940; /* #0a2f35; */
+  }
+  .t-red{
+    color: #791f06;
+  }
+  .balance-amount:before {
+    content: "\20B9" " ";
+  }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Expenze</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="home.html">Passbook</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="chart.html">Chart</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="expenses.html">Expenses</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="account.html">Accounts</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="container" id="transaction-app">
+    <div class="row justify-content-md-center">
+      <div class="col-sm-7">
+        <div id="piechart"></div>
+        <div id="barchart_div"></div>
+      </div>
+      <div class="col-sm-5">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Account</th>
+              <th>Type</th>
+              <th>Balance</th>
+            </tr>
+          </thead>
+          <tbody id='tbody'>
+            <!--tr>
+              <td colspan="8" v-if="activities.length == 0">
+                <p class="t-blue text-center">No Records Found!</p>
+              </td>
+            </tr-->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+<script type="text/javascript">
+  // Load google charts
+  google.charts.load('visualization', "1", {'packages':['corechart']}); //current
+  google.charts.setOnLoadCallback(drawChart);
+
+  // Draw the chart and set the chart values
+  function drawChart() {
+    axios.get('accounts/chart/share')
+    .then((response) => {
+      var data = google.visualization.arrayToDataTable(response.data.holding);
+      var options = {
+        title:'My Holdings', height: 300, pieSliceText: 'percentage', is3D: true,
+        chartArea: { width : '90%', height: '80%'}, legend: {
+            position: 'labeled',
+            labeledValueText: 'both',
+            textStyle: {
+                color: 'black',
+                fontSize: 14
+            }
+        },
+        slices: { 0: {offset: 0, color: '#ff7c43' },1: { offset: 0.1, color: '#d45087'},
+          2: {color: '#665191'}, 3: {offset: 0.1, color: '#003f5c'}, 4: {color: '#f95d6a'}, 5: {color: '#ffa600'}},
+        //slices: { 0: {color: '#ff7c43' },1: { offset: 0.1, color: '#d45087'}, 2: {offset: 0.2, color: '#003f5c'},
+        //    3: {color: '#ffa600'}, 4: {color: '#f95d6a'}, 5: {color: '#665191'}},
+        //slices: { 0: {color: '#00529b' },1: { color: '#007cc3'}, 2: {offset: 0.2, color: '#377b2b'},
+        //    3: {color: '#7ac142'}, 4: {color: '#fdbb2f'}, 5: {color: '#f47a1f'}}
+      };//#003f5c, #2f4b7c, #665191, #a05195, #d45087, #f95d6a, #ff7c43, #ffa600
+
+      var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+      chart.draw(data, options);
+
+      var dataOverall = google.visualization.arrayToDataTable(response.data.totalBalance);
+      var barchart_options = {
+        title: 'Holdings against Bills', is3D: false, height: 300, pieSliceText: 'value-and-percentage',
+        //slices: { 0: { color: '#dc1a1a' }, 1: { color: '#ffbc00' } }, //pieHole: 0.5, // slices: { 15: {offset: 0.5} },
+        slices: { 0: {color: '#d45087'}, 1: { color: '#003f5c' }, 2: { color: '#665191' } }, //pieHole: 0.5, // slices: { 15: {offset: 0.5} },
+        chartArea: {'width': '90%', 'height': '60%'}, legend: {
+            position: 'labeled',
+            labeledValueText: 'both',
+            textStyle: {
+                color: 'black',
+                fontSize: 14
+            }
+        },
+        //tooltip:{trigger:'selection'}
+      };
+      var barchart = new google.visualization.PieChart(document.getElementById('barchart_div'));
+      google.visualization.events.addListener(barchart, 'ready', function(e) {
+        barchart.setSelection([{row:1,column:null}]);
+      });
+      barchart.draw(dataOverall, barchart_options);
+
+      var tbody = document.getElementById('tbody');
+      for (let element of response.data.balance) {
+        let row = tbody.insertRow();
+        for (key in element) {
+          let cell = row.insertCell();
+          let span = document.createElement("SPAN");
+          console.log(key, element[key]);
+          if (key == 'balance') {
+            if (element[key] > 0) {
+              span.className = 't-blue';
+            } else {
+              span.className = 't-red';
+            }
+            span.className += ' pull-right balance-amount';
+            let text = document.createTextNode(Number(element[key]).toLocaleString('en'));
+            span.appendChild(text);
+          } else {
+            let text = document.createTextNode(element[key]);
+            span.appendChild(text);
+          }
+          cell.appendChild(span);
+        }
+      }
+    });
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Expenze</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./bootstrap.min.css">
+  <link rel="stylesheet" href="./bulma2.css">
+  <script src="./jquery.min.js"></script>
+  <script src="./axios.min.js"></script>
+  <script src="./bootstrap.min.js"></script>
+  <script src="vue-2.6.12.js"></script>
+  <style>
+  body {
+    background-color: #eeeeee;
+  }
+  .card {
+    border: 1px solid #fac16b;
+    /* border-color: #fac16b; */
+    border-radius: 5px;
+    margin: 4px;
+    padding: 8px;
+    font-size: 17px;
+    box-shadow: 0 .5rem 1rem #ffebcc!important;
+    margin-bottom: 10px;
+    background-color: #fffbf5;
+  }
+  .table td {
+    padding: 0rem;
+  }
+  .navbar {
+    margin-bottom: 1rem !important;
+  }
+  p {
+    margin: 0 !important;
+  }
+  :root {
+    --padding-x-table: 20px;
+  }
+  .table>thead>tr>th {
+    padding-left: var(--padding-x-table);
+    padding-right: var(--padding-x-table);
+  }
+  .table>tbody>tr>td {
+    padding-left: var(--padding-x-table);
+    padding-right: var(--padding-x-table);
+  }
+  .pull-left {
+    float: left;
+  }
+  .pull-right {
+    float: right;
+  }
+  .font-14 {
+    font-size: 14px;
+  }
+  .t-italic {
+    font-style: italic;
+  }
+  .t-blue-green {
+    color: #f56038; /*remark */
+  }
+  .t-high-blue { /* date */
+    color: #14606b;
+  }
+  .t-blue{
+    color: #0c3940; /* #0a2f35; */
+  }
+  .t-green{
+    color: #196642;
+  }
+  .t-red{
+    color: #791f06;
+  }
+  .t-orange {
+    color: #4a2d03; /*tag*/
+  }
+  .balance-amount:before {
+    content: "\20B9" " ";
+  }
+  .positive-balance-amount:before {
+    content: "+ " "\20B9" " ";
+  }
+  .negative-balance-amount:before {
+    content: "- " "\20B9" " ";
+  }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Expenze</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="home.html">Passbook</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="chart.html">Chart</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="expenses.html">Expenses</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="account.html">Accounts</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="container" id="transaction-app">
+    <div class="row justify-content-md-center">
+      <div class="col-sm-12">
+        <form class="form-inline">
+          <select v-model="transaction.account_id" class="form-control mb-3 mr-sm-3 mb-sm-0"
+            @change="getActivities()" placeholder="Select Account">
+            <option value=0>Select Account</option>
+            <option v-for="account in accounts" :value="account.id">{{ account.name + " :" + account.amount }}</option>
+          </select>
+          <select v-model="transaction.account_key" class="form-control mb-3 mr-sm-3 mb-sm-0"
+            @change="getActivities()" placeholder="Select Account">
+            <option value=0>Select Another Account</option>
+            <option v-for="account in accounts" :value="account.id">{{ account.name + " :" + account.amount }}</option>
+          </select>
+          <select v-model="transaction.tag_id" class="form-control mb-3 mr-sm-3 mb-sm-0"
+            @change="getActivities()" placeholder="Select Tag">
+            <option value=0>Select Tag</option>
+            <option v-for="tag in tags" :value="tag.id">{{ tag.name }}</option>
+          </select>
+          <select v-model="transaction.transaction_type_id" class="form-control mb-3 mr-sm-3 mb-sm-0"
+            @change="getActivities()" placeholder="Select Transaction Type">
+            <option value=0>Select Transaction Type</option>
+            <option v-for="tag in transactionTypes" :value="tag.id">{{ tag.name }}</option>
+          </select>
+          <div class="input-group  mb-3 mr-sm-3 mb-sm-0">
+            <label>Start Date</label>
+            <input type="date" class="form-control" v-model="transaction.start_date">
+          </div>
+
+          <div class="input-group  mb-3 mr-sm-3 mb-sm-0">
+            <label>End Date</label>
+            <input type="date" class="form-control" v-model="transaction.end_date">
+          </div>
+
+          <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+            <a class="btn btn-primary m-l-3" v-on:click="getActivities()">Submit</a>
+          </div>
+
+          <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+            <a class="btn btn-danger m-l-3" v-on:click="clear()">clear</a>
+          </div>
+        </form>
+      </div>
+      <div class="col-sm-12">
+        <br />
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th></th>
+              <th>From Account</th>
+              <th>To Account</th>
+              <th></th>
+              <th>Remark</th>
+              <th>
+                <span class="pull-right">Event date</span>
+              </th>
+              <th>
+                <span class="pull-right">Amount</span>
+              </th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="passbook in activities.list">
+              <td></td>
+              <td>
+                <p v-bind:class="[passbook.transaction_type === 'Income' ? 't-green' : 't-blue']">{{passbook.from_account || 'Credit'}}</p>
+                <span class="pull-right t-blue-green" v-if="passbook.from_account">
+                  <span class="t-orange balance-amount">{{Number(passbook.fp_previous_balance).toLocaleString('en')}} / </span>
+                  <span class="t-blue balance-amount">{{Number(passbook.fp_balance).toLocaleString('en')}}</span>
+                </span>
+              </td>
+              <td>
+                <p v-bind:class="[passbook.transaction_type === 'Expense' ? 't-red' : 't-blue']">{{passbook.to_account || 'Debit'}}</p>
+                <span class="pull-right t-blue-green" v-if="passbook.to_account">
+                  <span class="t-orange balance-amount">{{Number(passbook.tp_previous_balance).toLocaleString('en')}} / </span>
+                  <span class="t-blue balance-amount">{{Number(passbook.tp_balance).toLocaleString('en')}}</span>
+                </span>
+              </td>
+              <td></td>
+              <td>
+                <p class="t-orange">{{passbook.tag}} : {{passbook.sub_tag}}</p>
+                <span class="t-blue-green">{{passbook.remarks}}</span>
+              </td>
+              <td>
+                <span class="ml-auto t-high-blue pull-right">{{passbook.event_date}}</span>
+              </td>
+              <td>
+                <span v-if="passbook.transaction_type === 'Transfer'" class="pull-right t-blue balance-amount">{{Number(passbook.amount).toLocaleString('en')}}</span>
+                <span v-else-if="passbook.transaction_type === 'Income'" class="pull-right t-green positive-balance-amount">{{Number(passbook.amount).toLocaleString('en')}}</span>
+                <span v-else class="pull-right t-red negative-balance-amount">{{Number(passbook.amount).toLocaleString('en')}}</span>
+              </td>
+              <td></td>
+            </tr>
+            <tr>
+              <td colspan="8" v-if="activities.length == 0">
+                <p class="t-blue text-center">No Records Found!</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="col-sm-4">
+        <nav class="bulma bulma-nav">
+          <ul class="bulma-nav-ul" style="list-style-type:none;">
+            <li v-bind:class="[transaction.page_size === 10 ? 'nav-item is-current' : 'nav-item']">
+              <a class="bulma-nav-link" @click="transaction.page_size = 10;getActivities()">10</a>
+            </li>
+            <li v-bind:class="[transaction.page_size === 20 ? 'nav-item is-current' : 'nav-item']">
+              <a class="bulma-nav-link" @click="transaction.page_size = 20;getActivities()">20</a>
+            </li>
+            <li v-bind:class="[transaction.page_size === 40 ? 'nav-item is-current' : 'nav-item']">
+              <a class="bulma-nav-link" @click="transaction.page_size = 40;getActivities()">40</a>
+            </li>
+            <li v-bind:class="[transaction.page_size === 80 ? 'nav-item is-current' : 'nav-item']">
+              <a class="bulma-nav-link" @click="transaction.page_size = 80;getActivities()">80</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="col-sm-2">
+      </div>
+
+      <div class="col-sm-6">
+        <nav class="bulma bulma-page">
+          <a class="bulma-page-link" :disabled="transaction.page_index === 1"
+             @click="pagePrevious()">Previous</a>
+             <!-- current != final && final != 1
+             (transaction.page_total - transaction.page_index) > 0
+             page_index: 1,
+             page_size: 10, //transaction.page_index === 1
+             page_total: 0-->
+          <a class="bulma-page-link" :disabled="transaction.page_total === 1 || transaction.page_total === transaction.page_index"
+             @click="pageNext()">Next page</a>
+          <ul class="bulma-page-ul" style="list-style-type:none;">
+            <li v-if="transaction.page_index > 2">
+              <a class="bulma-page-link" @click="changePage(1)">1</a>
+            </li>
+            <li v-if="transaction.page_index > 3"><a class="bulma-page-ellipsis">&hellip;</a></li>
+
+            <li v-if="transaction.page_index > 1">
+              <a class="bulma-page-link" @click="changePage(transaction.page_index - 1)">{{transaction.page_index - 1}}</a>
+            </li>
+            <li class="is-current"><a class="bulma-page-link">{{transaction.page_index}}</a></li>
+            <li v-if="(transaction.page_total - transaction.page_index) > 0">
+              <a class="bulma-page-link" @click="changePage(transaction.page_index + 1)">{{transaction.page_index + 1}}</a>
+            </li>
+
+            <li v-if="(transaction.page_total - transaction.page_index) > 2"><a class="bulma-page-ellipsis">&hellip;</a></li>
+            <li v-if="(transaction.page_total - transaction.page_index) > 1">
+              <a class="bulma-page-link" @click="changePage(transaction.page_total)">{{transaction.page_total}}</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div class="col-sm-12 text-center">
+        <p style="margin:20px !important; padding:20px !important">Check all your Expenses of {{activities.sum}}!</p>
+      </div>
+    </div>
+  </div>
+</body>
+<!-- -->
+  <!-- our javascript -->
+  <script>
+    var app = new Vue({
+      el: '#transaction-app',
+      data: {
+        tags: [],
+        accounts: [],
+        activities: [],
+        transactionTypes: [ {id: 1, name: 'Transfer' }, {id: 2, name: 'Expense' }, {id: 3, name: 'Income' }],
+        transaction: {
+          account_id: 0,
+          account_key: 0,
+          tag_id:0,
+          transaction_type_id: 0,
+          start_date: null,
+          end_date: null,
+          page_index: 1,
+          page_size: 10,
+          page_total: 0
+        }
+      },
+      created() {
+          console.log('Component has been created!');
+      },
+      methods: {
+        getTags: function() {
+          axios.get('tags')
+          .then((response) => {
+            this.tags = response.data;
+          });
+        },
+        getAccounts: function() {
+          axios.get('accounts')
+          .then((response) => {
+            this.accounts = response.data;
+          });
+        },
+        pagePrevious: function()  {
+          if (this.transaction.page_index > 1 ) {
+            this.transaction.page_index --;
+            this.getActivities();
+          }
+        },
+        pageNext: function() {
+          if (this.transaction.page_index != this.transaction.page_total && this.transaction.page_total != 1) {
+            this.transaction.page_index ++;
+            this.getActivities();
+          }
+        },
+        changePage: function(n) {
+          this.transaction.page_index = n;
+          this.getActivities();
+        },
+        getActivities: function() {
+          axios.get('activities/passbook/log', { params: this.transaction })
+          .then((response) => {
+            this.activities = response.data;
+            listCount = this.activities.total;
+            pageWeight = this.transaction.page_size;
+            b = listCount % pageWeight;
+            if (b > 0) {
+              listCount = listCount + (pageWeight - b);
+            }
+            this.transaction.page_total = listCount / pageWeight;
+          });
+        },
+        clear() {
+          this.activities = [];
+          this.transaction = {
+            account_id: 0,
+            account_key: 0,
+            tag_id:0,
+            transaction_type_id: 0,
+            start_date: null,
+            end_date: null,
+            page_index: 1,
+            page_size: 10
+          };
+          console.log('Reloaded..!');
+        }
+      },
+      mounted() {
+          console.log('Component has been Mounted!');
+          this.getTags();
+          this.getAccounts();
+          this.getActivities();
+      }
+    });
+  </script>
+</html>

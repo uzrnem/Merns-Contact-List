@@ -1,0 +1,34 @@
+DELIMITER $$
+CREATE TRIGGER after_activity_trigger
+AFTER INSERT
+ON activities FOR EACH ROW
+BEGIN
+DECLARE old_balance decimal(20,2);
+DECLARE transaction_type varchar(20);
+
+IF NEW.from_account_id IS NULL THEN
+  set old_balance = ( select amount from accounts where id = NEW.to_account_id );
+  set transaction_type = ( select id from transaction_types where slug = 'credit' );
+  INSERT INTO passbooks(account_id, activity_id, previous_balance, transaction_type_id, balance, created_at, updated_at)
+  VALUES(NEW.to_account_id, NEW.id, old_balance, transaction_type, old_balance + NEW.amount, now(), now());
+  update accounts set amount = old_balance + NEW.amount, updated_at = now() where id = NEW.to_account_id;
+ELSEIF NEW.to_account_id IS NULL THEN
+  set old_balance = ( select amount from accounts where id = NEW.from_account_id );
+  set transaction_type = ( select id from transaction_types where slug = 'debit' );
+  INSERT INTO passbooks(account_id, activity_id, previous_balance, transaction_type_id, balance, created_at, updated_at)
+  VALUES(NEW.from_account_id, NEW.id, old_balance, transaction_type, old_balance - NEW.amount, now(), now());
+  update accounts set amount = old_balance - NEW.amount, updated_at = now() where id = NEW.from_account_id;
+ELSE
+  set old_balance = ( select amount from accounts where id = NEW.from_account_id );
+  set transaction_type = ( select id from transaction_types where slug = 'debit' );
+  INSERT INTO passbooks(account_id, activity_id, previous_balance, transaction_type_id, balance, created_at, updated_at)
+  VALUES(NEW.from_account_id, NEW.id, old_balance, transaction_type, old_balance - NEW.amount, now(), now());
+  update accounts set amount = old_balance - NEW.amount, updated_at = now() where id = NEW.from_account_id;
+
+  set old_balance = ( select amount from accounts where id = NEW.to_account_id );
+  set transaction_type = ( select id from transaction_types where slug = 'credit' );
+  INSERT INTO passbooks(account_id, activity_id, previous_balance, transaction_type_id, balance, created_at, updated_at)
+  VALUES(NEW.to_account_id, NEW.id, old_balance, transaction_type, old_balance + NEW.amount, now(), now());
+  update accounts set amount = old_balance + NEW.amount, updated_at = now() where id = NEW.to_account_id;
+END IF;
+END $$

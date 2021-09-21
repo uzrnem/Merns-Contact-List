@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  accounts: one
+  previous_balance: 9.99
+  credit: 9.99
+  debit: 9.99
+  balance: 9.99
+
+two:
+  accounts: two
+  previous_balance: 9.99
+  credit: 9.99
+  debit: 9.99
+  balance: 9.99

@@ -1,0 +1,4 @@
+name,slug,type,amount,is_frequent,is_snapshot_disable
+SBI,sbi,saving,18000,1,0
+Cash,cash,wallet,2535,1,0
+Paytm Wallet,paytm_wallet,wallet,0.20,1,0
