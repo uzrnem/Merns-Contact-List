@@ -28,6 +28,8 @@ services:
       PMA_HOST: db
       PMA_PORT: 3306
       # PMA_ARBITRARY: 1 // IF HOST is required, in case of local mysql and docker php myadmin
+      PMA_USER: root
+      PMA_PASSWORD: root
     # restart: always
     ports:
       - "8000:80"

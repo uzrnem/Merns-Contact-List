@@ -38,3 +38,6 @@ networks:
 volumes:
     postgres:
     pgadmin:
+
+# docker exec -it postgres psql --dbname=credentials --username=root --command="SHOW config_file"
+# /var/lib/postgresql/data/postgresql.conf
