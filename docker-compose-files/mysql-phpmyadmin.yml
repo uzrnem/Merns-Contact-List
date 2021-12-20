@@ -1,6 +1,10 @@
 #docker-compose -f mysql-phpmyadmin.yml up -d
-
 version: '3.7'
+
+networks:
+  app-tier:
+    driver: bridge
+
 services:
   db:
     image: mysql:latest
@@ -18,6 +22,8 @@ services:
       #local dir/files: docker dir/files
       - $HOME/projects/db/mysql_db:/var/lib/mysql
       - $HOME/projects/db/mysql_db_files:/sql_files
+    networks:
+      - app-tier
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
@@ -33,6 +39,8 @@ services:
     # restart: always
     ports:
       - "8000:80"
+    networks:
+      - app-tier
 
 volumes:
   db_data: {}
