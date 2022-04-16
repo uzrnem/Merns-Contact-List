@@ -1,0 +1,22 @@
+# mvn dependency:go-offline
+# mvn clean install
+# mvn spring-boot:run
+version: '3.7'
+
+services:
+  demo2_maven:
+    image: maven:3.8.5-jdk-8-slim
+    container_name: demo2
+    ports:
+      - 8010:8010
+    working_dir: /app
+    volumes:
+      - $HOME/uzrnem/crud-samples/spring-boot-java:/app
+      - $HOME/uzrnem/.m2:/root/.m2
+    command: "tail -f /dev/null"
+    networks:
+      - database_mysql
+
+networks:
+  database_mysql:
+    external: true
